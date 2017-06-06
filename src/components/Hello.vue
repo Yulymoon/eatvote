@@ -5,10 +5,6 @@
     <input type="text" name="" value="" v-model="lists.name" placeholder="名字">
     <input type="text" name="" value="" v-model="lists.idea" placeholder="我想吃">
     <input type="submit" value="快想想" @click.prevent="onSubmit">
-    <div v-for="n in orders">
-      <h2>  {{n.name}} </h2>
-      <span>想吃{{n.idea}}</span>
-    </div>
     <router-link  to="/idea">
       <a>投票頁</a>
     </router-link>
@@ -16,17 +12,7 @@
 </template>
 
 <script>
-
 import firebase from 'firebase'
-// let config = {
-//   apiKey: 'AIzaSyBSb4j-zRLaZhcFbjLi5t-KTRZeHiOA_Ss',
-//   authDomain: 'eatwhat-5599f.firebaseapp.com',
-//   databaseURL: 'https://eatwhat-5599f.firebaseio.com',
-//   projectId: 'eatwhat-5599f',
-//   storageBucket: 'eatwhat-5599f.appspot.com',
-//   messagingSenderId: '729588192084'
-// }
-// firebase.initializeApp(config)
 let db = firebase.database()
 let usersRef = db.ref('users')
 
