@@ -23,24 +23,19 @@ export default {
       msg: '吃什麼！？',
       lists: {
         name: '',
-        idea: []
+        idea: [],
+        count: 0
       }
     }
-  },
-
-  firebase: {
-    orders: usersRef
   },
 
   methods: {
     onSubmit: function () {
       usersRef.push(this.lists)
       this.lists.name = ''
-      this.lists.idea = []
-    },
-    removeUser: function (order) {
-      usersRef.child(order['.key']).remove()
+      this.lists.idea = ''
     }
+
   }
 }
 </script>
