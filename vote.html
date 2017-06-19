@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to Vue</title>
+    <meta charset="utf-8">
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div>投票</div>
+        <template v-for="(item, index) in options">
+            <input type="radio" name="vote" :value="item" v-model="vote">
+            <label for="vote">选项{{ index }}</label>
+        </template>
+        <div>
+            <button @click="newOption">增加选项</button>
+        </div>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                options: [
+                    '1',
+                    '2'
+                ],
+                vote: '1'
+            },
+            methods: {
+                newOption() {
+                    this.options.push(this.options.length.toString());
+                }
+            }
+        })
+    </script>
+</body>
+</html>
