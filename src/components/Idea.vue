@@ -9,8 +9,13 @@
           目前{{order.count}}人想ㄘ
         </div>
         <button type="button" name="button" @click="votesum(order)">選我選我選我</button>
-        <!-- <button @click="removeUser(order)">刪掉那些沒人投的</button> -->
+        <button @click="removeUser(order)">刪掉那些沒人投的</button>
+        <button v-show="showadbutton" type="button" name="button">怎ㄇ走</button>
+        <!-- <googlemap></googlemap> -->
       </div>
+    </div>
+    <div class="">
+      <button type="button" name="button" @click="sortedArray(orders)"></button>
     </div>
     <router-link to="/">
     <a>home</a>
@@ -22,6 +27,8 @@
 import firebase from 'firebase'
 let db = firebase.database()
 let usersRef = db.ref('users')
+
+import googlemap from '../components/googlemap'
 
 export default {
   name: 'idea',
@@ -41,21 +48,33 @@ export default {
       usersRef.child(n['.key']).update({
         count: n.count
       })
-      // usersRef.child('count').setValue(n.count)
-      // const childkey = n['.key']
-      // delete n['.key']
-      // this.$firebaseRefs.orders(childkey).set(n)
-      // console.log(usersRef)
-      // usersRef.transaction(function (n) {
-      //   return n.count ++
-      // })
-      // console.log(addcount)
-      // n.count = addcount
-      // console.log(n.count\)
     },
     removeUser: function (order) {
       usersRef.child(order['.key']).remove()
+    },
+    sortedArray: function (n) {
+      n.sort(function (a, b) { return b.count - a.count })
+      n[0].showadbutton = !n[0].showadbutton
+      console.log(n)
     }
+    // sortedArray: function (n) {
+    //   let i = 0
+    //   for (i = 0; i < n.length; i++) {
+    //     // console.log(n[i].count)
+    //     var list = Math.max(n[i].count)
+    //     console.log(list)
+    //   }
+    // }
+  },
+  computed: {
+    evenNumbers: function (n) {
+      return n.count.filter(function (number) {
+        return number % 2 === 0
+      })
+    }
+  },
+  components: {
+    googlemap
   }
 }
 </script>
@@ -64,6 +83,7 @@ export default {
  .vote{
    display:flex;
    justify-content: center;
-
+   flex-direction: column;
  }
+
 </style>
