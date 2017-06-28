@@ -24,7 +24,9 @@ export default {
       lists: {
         name: '',
         idea: [],
-        count: 0
+        count: 0,
+        address: false,
+        showadbutton: false
       }
     }
   },
