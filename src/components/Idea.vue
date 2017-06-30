@@ -10,7 +10,9 @@
         </div>
         <button type="button" name="button" @click="votesum(order)">選我選我選我</button>
         <button @click="removeUser(order)">刪掉那些沒人投的</button>
-        <button v-show="showadbutton" type="button" name="button">怎ㄇ走</button>
+        <div class=""  v-show="order.showadbutton">
+            <button type="button" name="button">怎ㄇ走</button>
+        </div>
         <!-- <googlemap></googlemap> -->
       </div>
     </div>
