@@ -1,8 +1,10 @@
 <template>
 <div class="gmap" >
+  <gmap-place-input default-place="" @place_changed="updatePlace" placeholder="腫麼走">
+  </gmap-place-input>
   <gmap-map
     :center="center"
-    :zoom="17"
+    :zoom="15"
   >
     <gmap-marker
       v-for="m in markers"
@@ -25,7 +27,8 @@ Vue.use(VueGoogleMaps, {
     key: 'AIzaSyCg-F7NdWvmOLTkUdsU1vtXXCIWh5_T2Yo',
     v: 'OPTIONAL VERSION NUMBER',
     libraries: 'places'
-  }
+  },
+  installComponents: true
 })
 
 export default {
@@ -33,8 +36,19 @@ export default {
     return {
       center: {lat: 23.0199732, lng: 120.22267740000007},
       markers: [{
-        position: {lat: 23.0199732, lng: 120.22267740000007}
-      }]
+        position: {lat: 22.934783, lng: 120.22606799999994}
+      }],
+      place: ''
+    }
+  },
+  methods: {
+    updatePlace (what) {
+      this.place = {
+        lat: what.geometry.location.lat(),
+        lng: what.geometry.location.lng()
+      }
+      this.center = this.place
+      this.markers[0].position = this.place
     }
   }
 }
@@ -43,7 +57,7 @@ export default {
 <style>
 
 .gmap{
-  width:50%;
+  width:100%;
 }
 
 .vue-map-container{

@@ -26,7 +26,7 @@ export default {
         idea: [],
         count: 0,
         address: false,
-        showadbutton: false
+        showadbutton: true
       }
     }
   },
@@ -36,8 +36,15 @@ export default {
       usersRef.push(this.lists)
       this.lists.name = ''
       this.lists.idea = ''
+    },
+    updatePlace (what) {
+      this.place = {
+        lat: what.geometry.location.lat(),
+        lng: what.geometry.location.lng()
+      }
+      this.center = this.place
+      this.markers[0].position = this.place
     }
-
   }
 }
 </script>

@@ -1,19 +1,18 @@
 <template>
   <div class="idea">
     <h1>{{ msg }}</h1>
-    <div class="vote">
-      <div v-for="order in orders" :key="order['.key']">
+    <div class="vote ">
+      <div class="voteset" v-for="order in orders" :key="order['.key']">
         <h2>  {{order.name}} </h2>
-        <span>想吃{{order.idea}}</span>
+        <span>想吃"{{order.idea}}"</span>
         <div>
           目前{{order.count}}人想ㄘ
         </div>
-        <button type="button" name="button" @click="votesum(order)">選我選我選我</button>
+        <button v-show="order.showadbutton" type="button" name="button" @click="votesum(order)">選我選我選我</button>
         <button @click="removeUser(order)">刪掉那些沒人投的</button>
-        <div class=""  v-show="order.showadbutton">
-            <button type="button" name="button">怎ㄇ走</button>
+        <div class=""  v-show="order.address">
+            <googlemap></googlemap>
         </div>
-        <!-- <googlemap></googlemap> -->
       </div>
     </div>
     <div class="">
@@ -44,6 +43,12 @@ export default {
     orders: usersRef
   },
 
+  ready: {
+    set: setTimeout(function (n) {
+      console.log(n)
+    }, 4000)
+  },
+
   methods: {
     votesum: function (n) {
       n.count ++
@@ -56,7 +61,12 @@ export default {
     },
     sortedArray: function (n) {
       n.sort(function (a, b) { return b.count - a.count })
-      n[0].showadbutton = !n[0].showadbutton
+      let i = 0
+      for (i = 0; i < n.length; i++) {
+        n[i].showadbutton = false
+      }
+      n.showadbutton = !n.showadbutton
+      n[0].address = !n[0].address
       console.log(n)
     }
     // sortedArray: function (n) {
@@ -85,7 +95,10 @@ export default {
  .vote{
    display:flex;
    justify-content: center;
-   flex-direction: column;
+   flex-wrap: wrap;
+ }
+ .voteset{
+   width:25%;
  }
 
 </style>
