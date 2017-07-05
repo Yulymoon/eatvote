@@ -1,7 +1,5 @@
 <template>
 <div class="gmap" >
-  <gmap-place-input default-place="" @place_changed="updatePlace" placeholder="腫麼走">
-  </gmap-place-input>
   <gmap-map
     :center="center"
     :zoom="15"
@@ -14,7 +12,10 @@
       @click="center=m.position"
     ></gmap-marker>
   </gmap-map>
+  <gmap-place-input default-place="" @place_changed="updatePlace" placeholder="腫麼走">
+  </gmap-place-input>
 </div>
+
 </template>
 
 <script type="text/javascript">
@@ -38,7 +39,7 @@ export default {
       markers: [{
         position: {lat: 22.934783, lng: 120.22606799999994}
       }],
-      place: ''
+      place: null
     }
   },
   methods: {
