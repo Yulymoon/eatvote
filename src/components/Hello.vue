@@ -31,6 +31,11 @@ export default {
   },
 
   methods: {
+    // onSubmit: function () {
+    //   usersRef.push(this.lists)
+    //   this.lists.name = ''
+    //   this.lists.idea = ''
+    // },
     onSubmit: function () {
       usersRef.push(this.lists)
       this.lists.name = ''

@@ -35,9 +35,9 @@ Vue.use(VueGoogleMaps, {
 export default {
   data () {
     return {
-      center: {lat: 23.0199732, lng: 120.22267740000007},
+      center: {lat: 0, lng: 0},
       markers: [{
-        position: {lat: 22.934783, lng: 120.22606799999994}
+        position: {lat: 0, lng: 0}
       }],
       place: null
     }
