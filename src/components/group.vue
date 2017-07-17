@@ -16,14 +16,16 @@
         <span class="hightlight">{{g.id}}</span>
         <span>正在揪人一起吃 <span class="hightlight">{{g.select}}</span></span>
         <span>距離投票結束還有 <span class="hightlight">{{g.time}}</span> 分鐘</span>
-        <span  @click="toggle()">想被揪</span>
+        <span class="wh" @click="toggle(g)">想被揪</span>
       </div>
-      <div class="" v-show="toggleshow">
-        <input type="text" v-model="ideallists.name" placeholder="名字" >
-        <input type="text" v-model="ideallists.idea" placeholder="我想吃">
-        <input class="subbutton" type="submit" value="想吃" @click.prevent="gridonSubmit(g)">
+      <div class="" v-show="g.toggleshow">
+        <div class="ideagrid">
+          <input class="ideasub" type="text" v-model="ideallists.name" placeholder="名字" >
+          <input class="ideasub" type="text" v-model="ideallists.idea" placeholder="我想吃">
+          <input class="subbutton cursor" type="submit" value="想吃" @click.prevent="gridonSubmit(g)">
+        </div>
         <div class="vote">
-          <div class="voteset" v-for="order in groups" :key="order['.key']">
+          <div class="voteset" v-for="order in g.lists" :key="order['.key']" @click="">
             <h2>  {{order.name}} </h2>
             <span>想吃"{{order.idea}}"</span>
             <div>
@@ -57,6 +59,7 @@ export default {
         id: '',
         select: '',
         time: null,
+        toggleshow: false,
         lists: []
       },
       ideallists: {
@@ -66,7 +69,6 @@ export default {
         address: false,
         showadbutton: true
       },
-      toggleshow: false,
       voteshow: false
     }
   },
@@ -76,8 +78,8 @@ export default {
   },
 
   methods: {
-    toggle: function (n) {
-      this.toggleshow = !this.toggleshow
+    toggle: function (g) {
+      g.toggleshow = !g.toggleshow
     },
     onSubmit: function () {
       usersRef.push(this.group)
@@ -91,7 +93,7 @@ export default {
       listkey.child('lists').push(this.ideallists)
       this.ideallists.name = ''
       this.ideallists.idea = ''
-      this.voteshow = !this.voteshow
+      // this.voteshow = !this.voteshow
     },
     votesum: function (n) {
       n.count ++
@@ -125,6 +127,23 @@ li {
 a {
   color: #42b983;
 }
+.wh{
+  color:#fff;
+}
+.ideagrid{
+  display:flex;
+  input{
+  width: 30%;
+  }
+}
+
+.ideasub{
+  background: none;
+  padding: 10px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+}
+
 
 .group{
   display:flex;
@@ -145,7 +164,6 @@ a {
 .subbutton{
   background: none;
   border-radius: 20px;
-  font-size: 1.3rem;
   padding:1% 2%;
   color:white;
   border-color: white;
