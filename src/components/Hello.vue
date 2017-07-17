@@ -1,6 +1,5 @@
 <template>
   <div class="hello">
-    <h3>我是大金剛，住在森林裡，每天都要吃些不同的東西，今天要吃手，明天要吃腳，後天要吃什麼</h3>
     <h1>{{ msg }}</h1>
     <input type="text" name="" value="" v-model="lists.name" placeholder="名字">
     <input type="text" name="" value="" v-model="lists.idea" placeholder="我想吃">
@@ -32,6 +31,11 @@ export default {
   },
 
   methods: {
+    // onSubmit: function () {
+    //   usersRef.push(this.lists)
+    //   this.lists.name = ''
+    //   this.lists.idea = ''
+    // },
     onSubmit: function () {
       usersRef.push(this.lists)
       this.lists.name = ''

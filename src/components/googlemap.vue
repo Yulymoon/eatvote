@@ -1,7 +1,5 @@
 <template>
 <div class="gmap" >
-  <gmap-place-input default-place="" @place_changed="updatePlace" placeholder="腫麼走">
-  </gmap-place-input>
   <gmap-map
     :center="center"
     :zoom="15"
@@ -14,7 +12,10 @@
       @click="center=m.position"
     ></gmap-marker>
   </gmap-map>
+  <gmap-place-input default-place="" @place_changed="updatePlace" placeholder="腫麼走">
+  </gmap-place-input>
 </div>
+
 </template>
 
 <script type="text/javascript">
@@ -34,11 +35,11 @@ Vue.use(VueGoogleMaps, {
 export default {
   data () {
     return {
-      center: {lat: 23.0199732, lng: 120.22267740000007},
+      center: {lat: 0, lng: 0},
       markers: [{
-        position: {lat: 22.934783, lng: 120.22606799999994}
+        position: {lat: 0, lng: 0}
       }],
-      place: ''
+      place: null
     }
   },
   methods: {
