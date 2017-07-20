@@ -22,21 +22,24 @@
         <div class="ideagrid">
           <input class="ideasub" type="text" v-model="ideallists.name" placeholder="名字" >
           <input class="ideasub" type="text" v-model="ideallists.idea" placeholder="我想吃">
-          <input class="subbutton cursor" type="submit" value="想吃" @click.prevent="gridonSubmit(g)">
+          <input class="ideasub subbutton cursor" type="submit" value="想吃" @click.prevent="gridonSubmit(g)">
         </div>
         <div class="vote">
-          <div class="voteset" v-for="order in g.lists" :key="order['.key']" @click="">
+          <div class="voteset" v-for="(order,index) in g.lists" :key="order['.key']" @click="">
             <h2>  {{order.name}} </h2>
             <span>想吃"{{order.idea}}"</span>
             <div>
               目前{{order.count}}人想ㄘ
             </div>
-            <button v-show="order.showadbutton" type="button" name="button" @click="votesum(order)">選我選我選我</button>
-            <button @click="removeUser(order)">刪掉那些沒人投的</button>
+            <button v-show="order.showadbutton" type="button" name="button" @click="votesum(g,index)">選我選我選我</button>
+            <!-- <button @click="removeUser(order)">刪掉那些沒人投的</button> -->
             <div class=""  v-show="order.address">
                 <!-- <googlemap></googlemap> -->
             </div>
           </div>
+        </div>
+        <div class="">
+          <button type="button" name="button" @click="sortedArray(g.lists)">test</button>
         </div>
       </div>
     </div>
@@ -88,22 +91,33 @@ export default {
       this.group.time = ''
     },
     gridonSubmit: function (g) {
-      console.log(g)
       let listkey = usersRef.child(g['.key'])
-      listkey.child('lists').push(this.ideallists)
+      let key = listkey.child('lists').push(this.ideallists).key
+      console.log('push key = ' + key)
       this.ideallists.name = ''
       this.ideallists.idea = ''
-      // this.voteshow = !this.voteshow
     },
-    votesum: function (n) {
-      n.count ++
-      usersRef.child(n['.key']).update({
-        count: n.count
+    votesum: function (g, index) {
+      g.lists[index].count ++
+      let votecount = g.lists[index].count
+      let listkey = usersRef.child(g['.key']).child('lists').child(index)
+      listkey.update({
+        count: votecount
       })
     },
-    removeUser: function (order) {
-      usersRef.child(order['.key']).remove()
+    sortedArray: function (n) {
+      console.log(n)
+      // n.sort(function (a, b) { return b.count - a.count })
+      // let i = 0
+      // for (i = 0; i < n.length; i++) {
+      //   n[i].showadbutton = false
+      // }
+      // n.showadbutton = !n.showadbutton
+      // n[0].address = !n[0].address
     }
+    // removeUser: function (order) {
+    //   usersRef.child(order['.key']).remove()
+    // }
   }
 }
 </script>
@@ -132,9 +146,7 @@ a {
 }
 .ideagrid{
   display:flex;
-  input{
-  width: 30%;
-  }
+  width:50vw;
 }
 
 .ideasub{
@@ -142,6 +154,7 @@ a {
   padding: 10px;
   border: 1px solid #fff;
   border-radius: 5px;
+  flex:3
 }
 
 
@@ -150,11 +163,19 @@ a {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  width:100vw;
   /*height:20vh;*/
   background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
   a{
     text-decoration:none;
   }
+}
+.vote{
+  width:100vw;
+  display:flex;
+}
+.voteset{
+  width:25%;
 }
 
 .hightlight{
