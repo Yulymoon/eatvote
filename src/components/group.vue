@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="hello" id="demo">
     <h1>{{msg}}</h1>
     <input type="text" v-model="group.id" placeholder="邊緣人主揪">
     <select v-model="group.select">
@@ -11,14 +11,16 @@
     </select>
     <input type="text"  onkeyup="value=value.replace(/[^\d]/g,'') " value="" v-model="group.time" placeholder="投票時間 分鐘">
     <input type="submit" value="快想想" @click.prevent="onSubmit">
-    <div class="group cursor" v-for="g in groups" :key="g['.key']">
+    <div class="group" v-for="g in groups" :key="g['.key']">
       <div class="">
         <span class="hightlight">{{g.id}}</span>
         <span>正在揪人一起吃 <span class="hightlight">{{g.select}}</span></span>
         <span>距離投票結束還有 <span class="hightlight">{{g.time}}</span> 分鐘</span>
+        <span @click="testtime(g)">測試用的function</span>
         <span class="wh" @click="toggle(g)">想被揪</span>
       </div>
-      <div class="" v-show="g.toggleshow">
+      <div class="">
+        <!-- <div class="" v-show="g.toggleshow"> -->
         <div class="ideagrid">
           <input class="ideasub" type="text" v-model="ideallists.name" placeholder="名字" >
           <input class="ideasub" type="text" v-model="ideallists.idea" placeholder="我想吃">
@@ -61,7 +63,7 @@ export default {
       group: {
         id: '',
         select: '',
-        time: null,
+        time: '',
         toggleshow: false,
         lists: []
       },
@@ -81,10 +83,36 @@ export default {
   },
 
   methods: {
+    // test: setInterval(
+    //   function (g) {
+    //     console.log(g)
+    //   }, 1000
+    // ),
+    testtime: function (g) {
+      console.log(g.time)
+      let rett = new Date()
+      let t = rett.getTime()
+      let minutes = 1000 * 60
+      let y = (g.time - t) / minutes
+      if (y < 0) {
+        y = 0
+      }
+      g.time = Math.round(y)
+    },
     toggle: function (g) {
       g.toggleshow = !g.toggleshow
     },
     onSubmit: function () {
+      let ret = new Date()
+      let n = ret.getTime()
+      // let d = ret.setMinutes(this.group.time)
+      let d = this.group.time * 1000 * 60
+      this.group.time = n + d
+      // this.group.time = d
+      // console.log(typeof n)
+      // console.log(ret)
+      // console.log(typeof d)
+      // console.log(this.group.time )
       usersRef.push(this.group)
       this.group.id = ''
       this.group.select = ''
@@ -101,12 +129,18 @@ export default {
       g.lists[index].count ++
       let votecount = g.lists[index].count
       let listkey = usersRef.child(g['.key']).child('lists').child(index)
+      // listkey.orderByValue().limitToLast(4).on('value', function (snapshot) {
+      //   console.log(snapshot)
+        // snapshot.forEach(function (data) {
+        //   console.log(data.key + data.val())
+        // })
+      // })
       listkey.update({
         count: votecount
       })
     },
-    sortedArray: function (n) {
-      console.log(n)
+    sortedArray: function (g) {
+      console.log(g)
       // n.sort(function (a, b) { return b.count - a.count })
       // let i = 0
       // for (i = 0; i < n.length; i++) {
