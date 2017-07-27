@@ -15,7 +15,7 @@
       <div class="">
         <span class="hightlight">{{g.id}}</span>
         <span>正在揪人一起吃 <span class="hightlight">{{g.select}}</span></span>
-        <span>距離投票結束還有 <span class="hightlight">{{g.time}}</span> 分鐘</span>
+        <span>距離投票結束還有 <span class="hightlight">{{testtime(g.time)}}</span> 分鐘</span>
         <span @click="testtime(g)">測試用的function</span>
         <span class="wh" @click="toggle(g)">想被揪</span>
       </div>
@@ -82,22 +82,25 @@ export default {
     groups: usersRef
   },
 
+  // created: {
+  //   test: setInterval(
+  //     function () {
+  //       console.log(usersRef)
+  //     }, 1000
+  //   )
+  // },
+
   methods: {
-    // test: setInterval(
-    //   function (g) {
-    //     console.log(g)
-    //   }, 1000
-    // ),
     testtime: function (g) {
-      console.log(g.time)
       let rett = new Date()
       let t = rett.getTime()
       let minutes = 1000 * 60
-      let y = (g.time - t) / minutes
-      if (y < 0) {
-        y = 0
-      }
-      g.time = Math.round(y)
+      let y = (g - t) / minutes
+      // if (y < 0) {
+      //   this.y = 0
+      // }
+      g = Math.round(y)
+      return g
     },
     toggle: function (g) {
       g.toggleshow = !g.toggleshow
