@@ -2,6 +2,10 @@
 
 > A Vue.js project
 
+#待更新
+2017/8/3
+自動完成地圖 cookie防止重複投票
+
 ## Build Setup
 
 ``` bash
