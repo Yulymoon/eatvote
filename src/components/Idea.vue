@@ -67,7 +67,6 @@ export default {
       }
       n.showadbutton = !n.showadbutton
       n[0].address = !n[0].address
-      console.log(n)
     }
     // sortedArray: function (n) {
     //   let i = 0
