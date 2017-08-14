@@ -5,28 +5,31 @@
     <select v-model="group.select">
       <option disabled value="">要什麼時候吃</option>
       <option>早餐</option>
+      <option>早午餐</option>
       <option>午餐</option>
       <option>下午茶</option>
       <option>晚餐</option>
+      <option>宵夜</option>
     </select>
     <input type="text"  onkeyup="value=value.replace(/[^\d]/g,'') " value="" v-model="group.time" placeholder="投票時間 分鐘">
     <input type="submit" value="快想想" @click.prevent="onSubmit">
     {{testtime()}}
     <div class="group" v-for="g in groups" :key="g['.key']">
-      <div class="">
+      <div class="content">
         <span class="hightlight">{{g.id}}</span>
         <span>正在揪人一起吃 <span class="hightlight">{{g.select}}</span></span>
         <span>距離投票結束還有 <span class="hightlight">{{g.lasttime}}</span> 分鐘</span>
-        <span class="wh" @click="toggle(g)">想被揪</span>
+        <span class="wh point" @click="toggle(g)">想被揪</span>
         <div class="voteresult" v-show="g.toggleshow">
           <div class="left">
-            <h1 v-if="g.lasttime === 0 ">投票已結束</h1>
-            <h1><span v-if="g.lasttime !== 0 ">目前</span>由{{g.firstvote.name}}提出的{{g.firstvote.idea}}</h1>
-            <h2><span v-if="g.lasttime === 0 ">總共</span>獲得{{g.firstvote.count}}票<span v-if="g.lasttime !== 0 ">領先</span></h2>
+            <h1 v-if="g.lasttime === 0 ">投票結束惹</h1>
+            <h1><span v-if="g.lasttime !== 0 ">目前</span>由 {{g.firstvote.name}} 提出的 {{g.firstvote.idea}} </h1>
+            <h2><span v-if="g.lasttime === 0 ">總共</span>獲得 {{g.firstvote.count}} 票<span v-if="g.lasttime !== 0 ">領先</span></h2>
           </div>
-          <div class="right">
+          <div class="right" v-show="g.lasttime === 0">
             <span>腫麼去</span>
-            <googlemap></googlemap>
+            <!-- <googlemap></googlemap> -->
+
           </div>
       </div>
       </div>
@@ -200,9 +203,10 @@ export default {
     //   usersRef.child(order['.key']).remove()
     // }
   },
-  components: {
+  component: {
     googlemap
   }
+
 }
 </script>
 
@@ -254,6 +258,9 @@ a {
     text-decoration:none;
   }
 }
+.content{
+  width:100%;
+}
 .vote{
   width:100vw;
   display:flex;
@@ -277,11 +284,19 @@ a {
 
 .voteresult{
   display:flex;
-  .left{
-    width:50vw;
-  }
-  .right{
-    width:50vw;
-  }
+}
+.left{
+  width:50%;
+}
+.right{
+  width:50%;
+}
+.point{
+  cursor:pointer;
+}
+/*map*/
+#map{
+  height: 400px;
+  width: 100%;
 }
 </style>

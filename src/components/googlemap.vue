@@ -48,8 +48,8 @@ export default {
         lat: what.geometry.location.lat(),
         lng: what.geometry.location.lng()
       }
-      this.center = this.place
-      this.markers[0].position = this.place
+      // this.center = this.place
+      // this.markers[0].position = this.place
     }
   }
 }
