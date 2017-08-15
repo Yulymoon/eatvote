@@ -5,6 +5,7 @@
   "author": "",
   "private": true,
   "scripts": {
+    "heroku-postbuild": "webpack -p --config ./webpack.prod.config.js --progress",
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
     "build": "node build/build.js",
